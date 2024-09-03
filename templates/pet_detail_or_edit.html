@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pet.name }}{% endblock %}
+
+{% block content %}
+    <h1>{{ pet.name }}</h1>
+
+    {% if pet.photo_url %}
+    <p>
+        <img class="img-fluid" src="{{ pet.photo_url }}" alt="{{ pet.name }}" width="300">
+    </p>
+    {% endif %}
+
+    <p>Species: {{ pet.species }}</p>
+
+    {% if pet.age %}
+    <p>Age: {{ pet.age }}</p>
+    {% endif %}
+
+    <h2>Update Pet</h2>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.photo_url.label }}
+            {{ form.photo_url(size=64) }}
+            {% for error in form.photo_url.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.notes.label }}
+            {{ form.notes(rows=5, cols=50) }}
+            {% for error in form.notes.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %} 
+        </div>
+        <div class="form-group">
+            {{ form.available.label }}
+            {{ form.available() }}
+            {% for error in form.available.errors %}
+                <span class="text-danger">{{ error }}</span>
+            {% endfor %}
+        </div>
+        <button class="btn btn-primary" type="submit">Update Pet</button>
+    </form>
+    <a href="/">Back to Pets Homepage</a>
+{% endblock %}
